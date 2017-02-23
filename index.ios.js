@@ -1,36 +1,32 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- * @flow
- */
-
 import React, { Component } from 'react'
-import {
-  AppRegistry,
-  StyleSheet,
-  Text,
-  View
-} from 'react-native'
+import { AppRegistry } from 'react-native'
+import { Provider } from 'react-redux'
 
-import Board from './src/components/Board.js'
+import Game from './src/containers/Game.js'
+import { moveUp, moveDown, moveLeft, moveRight } from './src/actions/actions.js'
+import store from './src/store.js'
 
-export default class SnakeGame extends Component {
+class SnakeGame extends Component {
   render() {
     return (
-      <View style={styles.container}>
-        <Board />
-      </View>
-    );
+      <Provider store={store}>
+        <Game />
+      </Provider>
+    )
   }
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF',
-  }
-});
+// Log the initial state
+console.log(store.getState())
 
-AppRegistry.registerComponent('SnakeGame', () => SnakeGame);
+// Every time the state changes, log it
+// Note that subscribe() returns a function for unregistering the listener
+let unsubscribe = store.subscribe(() =>
+  console.log(store.getState())
+)
+// Dispatch some actions
+store.dispatch(moveRight())
+// Stop listening to state updates
+unsubscribe()
+
+AppRegistry.registerComponent('SnakeGame', () => SnakeGame)
