@@ -4,6 +4,7 @@ import GameView from '../components/GameView.js'
 
 function mapStateToProps(state) {
   return {
+    game: state.game,
     score: state.score,
     board: {...state.board}
   }

@@ -14,13 +14,16 @@ class Board extends Component {
     // start with the board empty
     let tiles = [...Array(boardSize).keys()].map((k) => <EmptyTile key={k}/>)
     // add the the snake tail
-    tiles[board.snake.tailPosition] = ( <SnakeTile key={board.snake.tailPosition}/> )
+    tiles[board.snake.tailTile] = ( <SnakeTile key={board.snake.tailTile}/> )
     // add the snake head
-    tiles[board.snake.headPosition] = ( <SnakeTile key={board.snake.headPosition}/> )
+    tiles[board.snake.headTile] = ( <SnakeTile key={board.snake.headTile}/> )
     // now add the snake body
     for (let key in board.snake.body) {
       tiles[key] = ( <SnakeTile key={key} /> )
     }
+    // add the food tile
+    tiles[board.foodTile] = (<FoodTile key={board.foodTile}/>)
+
 
     return (
       <View style={styles.outerBoard}>

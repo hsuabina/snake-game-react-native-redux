@@ -24,8 +24,6 @@ console.log(store.getState())
 let unsubscribe = store.subscribe(() =>
   console.log(store.getState())
 )
-// Dispatch some actions
-store.dispatch(moveRight())
 // Stop listening to state updates
 unsubscribe()
 

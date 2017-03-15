@@ -1,12 +1,11 @@
-import {
-  MOVE
-} from '../actions/actions.js'
+import { TURN, MOVE, GROW, CRASH, GAME_TICK, UPDATE_DIRECTION } from '../actions/actions.js'
 
-import { getNextTile, moveSnake } from '../utils/TileUtils'
+import { getUpdatedSnake } from '../utils/TileUtils'
 
 const initialState = {
   game: {
-    paused: false
+    paused: false,
+    crashed: false
   },
   score: 0,
   board: {
@@ -14,58 +13,52 @@ const initialState = {
     cols: 20,
     snake: {
       size: 3,
-      headPosition: 2,
-      tailPosition: 0,
+      headTile: 2,
+      tailTile: 0,
       body: {
         0: 1,
         1: 2
-      }
+      },
+      direction: 'RIGHT'
     },
-    food: {
-      position: 20
-    }
+    foodTile: 10
   }
 }
 
 function reducer(state = initialState, action) {
+  let newState = { ...state }
 
   switch (action.type) {
+    case TURN:
+      console.log('Turn command received')
+      break
+    case GAME_TICK:
+      console.log('Game tick')
+      break
+    case UPDATE_DIRECTION:
+      console.log('Updating snake direction')
+      newState.board.snake.direction = action.payload.direction
+      break
     case MOVE:
-      let fromTile = state.board.snake.headPosition
-      let direction = action.payload
-      let board = state.board
-      let nextTile = getNextTile(fromTile, direction, board)
-
-      // snake crashes into the wall
-      if (nextTile < 0) {
-        console.log('Snake crashes into the wall')
-        return {...state, game: { ...state.game, paused: true } }
-      }
-
-      // snake crashes with its body
-      if (nextTile in state.board.snake.body) {
-        console.log('Snake crashed with its body')
-        return {...state, game: { ...state.game, paused: true } }
-      }
-
-      // snake grows
-      if (nextTile == state.board.food.position) {
-        console.log('Snake grows')
-        return {...state, game: { ...state.game, paused: true } }
-      }
-
       console.log('Snake moves to an empty tile')
-      let newSnake = moveSnake(state.board.snake, nextTile, false)
-
-      return {...state, board: { ...state.board, snake: newSnake }}
-      break;
-    default:
-      return state;
+      newState.board.snake = getUpdatedSnake(state.board.snake, action.payload.nextTile, false)
+      break
+    case GROW:
+      console.log('Snake eats food and grows')
+      newState.board.snake = getUpdatedSnake(state.board.snake, action.payload.nextTile, true)
+      newState.board.foodTile = action.payload.newFoodTile
+      newState.score = newState.score + 1
+      break
+    case CRASH:
+      console.log('Snake crashes into the wall or its body')
+      newState.game.crashed = true
+      newState.game.paused = true
+      break
   }
 
   // For now, don't handle any actions
   // and just return the state given to us.
-  return state
+  return newState
 }
 
 export default reducer
