@@ -16,6 +16,9 @@ function *rootSaga() {
 function *tickSaga() {
   while (true) {
     yield call(updateGameSaga)
+    const game = yield select(getGame)
+    if (game.crashed)
+      break
     yield delay(1000)
   }
 }
@@ -63,9 +66,13 @@ function *updateGameSaga() {
 }
 
 
-// Selector
+// Selectors
 const getBoard = (state) => {
   return state.board
+}
+
+const getGame = (state) => {
+  return state.game
 }
 
 const getNewFoodTile = (args) => {

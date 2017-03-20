@@ -5,9 +5,9 @@ import { getUpdatedSnake } from '../utils/TileUtils'
 const initialState = {
   game: {
     paused: false,
-    crashed: false
+    crashed: false,
+    score: 0
   },
-  score: 0,
   board: {
     rows: 20,
     cols: 20,
@@ -47,7 +47,7 @@ function reducer(state = initialState, action) {
       console.log('Snake eats food and grows')
       newState.board.snake = getUpdatedSnake(state.board.snake, action.payload.nextTile, true)
       newState.board.foodTile = action.payload.newFoodTile
-      newState.score = newState.score + 1
+      newState.game.score = newState.game.score + 1
       break
     case CRASH:
       console.log('Snake crashes into the wall or its body')

@@ -19,7 +19,7 @@ class GameView extends Component {
       return (
         <View style={ styles.gameview }>
           <View style= {styles.scores }>
-            <Scores score={ this.props.score } />
+            <Scores score={ this.props.game.score } />
           </View>
 
           <View style={ styles.board }>
