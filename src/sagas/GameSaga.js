@@ -1,12 +1,28 @@
-import { TURN, MOVE, GROW, CRASH, UPDATE, move, grow, crash, updateDirection } from '../actions/actions.js'
+import { delay } from 'redux-saga'
 import { take, select, call, put } from 'redux-saga/effects'
+
+import { TURN, MOVE, GROW, CRASH, UPDATE, move, grow, crash, updateDirection } from '../actions/actions.js'
+
 
 import { getNextTile, isValidTurn } from '../utils/TileUtils.js'
 
+function *rootSaga() {
+  yield [
+      tickSaga(),
+      watchTurnSaga()
+    ]
+}
 
-function *gameSaga() {
+function *tickSaga() {
   while (true) {
-    // wait for the player to turn into a direction
+    yield call(updateGameSaga)
+    yield delay(1000)
+  }
+}
+
+// updates snake direction everytime user interacts with keyboard (TURN action)
+function *watchTurnSaga() {
+  while (true) {
     const action = yield take(TURN)
 
     let board = yield select(getBoard)
@@ -16,12 +32,11 @@ function *gameSaga() {
 
     if (isValidTurn(currentDirection, turnDirection)) {
       yield put(updateDirection(turnDirection))
-      yield call(tickSaga)
     }
   }
 }
 
-function *tickSaga() {
+function *updateGameSaga() {
   // fetch info from the store
   const board = yield select(getBoard)
   const rows = board.rows
@@ -36,10 +51,7 @@ function *tickSaga() {
   // snake crashes into the wall or with itself
   if (nextTile < 0 || nextTile in snake.body) {
     yield put(crash())
-    return
-  }
-
-  if (nextTile == foodTile) {
+  } else if (nextTile == foodTile) {
     // find a new empty tile for the food
     let newFoodTile = yield call(getNewFoodTile, [rows, cols, snake, foodTile])
     // dispatch a grow action
@@ -76,4 +88,4 @@ const getNewFoodTile = (args) => {
 }
 
 
-export { gameSaga }
+export { rootSaga }
