@@ -37,7 +37,7 @@ class Board extends Component {
 
 const styles = StyleSheet.create({
   outerBoard: {
-    marginTop: 20,
+    marginTop: 10,
     flex: 0,
     borderWidth: 5,
     borderColor: '#FF00FF'

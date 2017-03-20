@@ -18,9 +18,17 @@ class GameView extends Component {
     } else {
       return (
         <View style={ styles.gameview }>
-          <Board board={ this.props.board }/>
-          <Controls />
-          <Scores score={ this.props.score } />
+          <View style= {styles.scores }>
+            <Scores score={ this.props.score } />
+          </View>
+
+          <View style={ styles.board }>
+            <Board board={ this.props.board } />
+          </View>
+
+          <View style={ styles.controls }>
+            <Controls />
+          </View>
         </View>
       )
     }
@@ -30,9 +38,21 @@ class GameView extends Component {
 const styles = StyleSheet.create({
   gameview: {
     flex: 1,
-    justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#F5FCFF',
+    marginTop: 20
+  },
+
+  scores: {
+    marginTop: 20
+  },
+
+  board: {
+    marginTop: 20
+  },
+
+  controls: {
+    paddingTop: 20
   }
 });
 
