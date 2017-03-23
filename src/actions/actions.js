@@ -8,9 +8,8 @@ const MOVE = 'MOVE'
 const GROW = 'GROW'
 const CRASH = 'CRASH'
 const UPDATE_DIRECTION = 'UPDATE_DIRECTION'
-const GAME_TICK = 'GAME_TICK'
 
-export { TURN, MOVE, GROW, CRASH, UPDATE_DIRECTION, GAME_TICK }
+export { TURN, MOVE, GROW, CRASH, UPDATE_DIRECTION }
 
 
 // TURN action creators
@@ -36,9 +35,4 @@ export function crash() {
 // UPDATE_DIRECTION action creator
 export function updateDirection(direction) {
   return { type: UPDATE_DIRECTION, payload: { direction: direction } }
-}
-
-// GAME_TICK action creator
-export function gameTick() {
-  return { type: GAME_TICK, payload: null }
 }

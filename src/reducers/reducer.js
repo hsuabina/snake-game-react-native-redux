@@ -1,4 +1,4 @@
-import { TURN, MOVE, GROW, CRASH, GAME_TICK, UPDATE_DIRECTION } from '../actions/actions.js'
+import { TURN, MOVE, GROW, CRASH, UPDATE_DIRECTION } from '../actions/actions.js'
 
 import { getUpdatedSnake } from '../utils/TileUtils'
 
@@ -19,7 +19,8 @@ const initialState = {
         0: 1,
         1: 2
       },
-      direction: 'RIGHT'
+      direction: 'RIGHT',
+      nextDirection: null
     },
     foodTile: 10
   }
@@ -32,12 +33,9 @@ function reducer(state = initialState, action) {
     case TURN:
       console.log('Turn command received')
       break
-    case GAME_TICK:
-      console.log('Game tick')
-      break
     case UPDATE_DIRECTION:
-      console.log('Updating snake direction')
-      newState.board.snake.direction = action.payload.direction
+      console.log('Updating snake nextDirection (' + action.payload.direction + ')')
+      newState.board.snake.nextDirection = action.payload.direction
       break
     case MOVE:
       console.log('Snake moves to an empty tile')

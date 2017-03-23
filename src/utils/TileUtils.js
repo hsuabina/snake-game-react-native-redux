@@ -26,34 +26,31 @@ function getUpdatedSnake(oldSnake, nextTile, grow) {
     delete newBody[oldSnake.tailTile]
   }
 
+  //debugger
+
   let newSnake = {
     size: grow? oldSnake.size + 1: oldSnake.size,
     headTile: newHeadTile,
     tailTile: newTailTile,
     body: newBody,
-    direction: oldSnake.direction
+    direction: oldSnake.nextdirection == null? oldSnake.direction: oldSnake.nextDirection,
+    nextDirection: null
   }
 
   return newSnake
 }
 
 function isValidTurn(currentDirection, turnDirection) {
-
   switch (turnDirection) {
     case 'UP':
-      return (currentDirection == 'DOWN')? false: true
     case 'DOWN':
-      return (currentDirection == 'UP')? false: true
+      return (currentDirection == 'UP' || currentDirection == 'DOWN')? false: true
     case 'LEFT':
-      return (currentDirection == 'RIGHT')? false: true
     case 'RIGHT':
-      return (currentDirection == 'LEFT')? false: true
+      return (currentDirection == 'LEFT' || currentDirection == 'RIGHT')? false: true
     default:
       return false
   }
-
-  return true
-
 }
 
 export { getNextTile, getUpdatedSnake, isValidTurn }

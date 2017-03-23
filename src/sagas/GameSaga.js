@@ -1,5 +1,6 @@
 import { delay } from 'redux-saga'
 import { take, select, call, put } from 'redux-saga/effects'
+import Ticker  from 'redux-saga-ticker';
 
 import { TURN, MOVE, GROW, CRASH, UPDATE, move, grow, crash, updateDirection } from '../actions/actions.js'
 
@@ -14,12 +15,14 @@ function *rootSaga() {
 }
 
 function *tickSaga() {
+  const channel = Ticker(500);
   while (true) {
-    yield call(updateGameSaga)
+    yield take(channel);
+    yield call(updateGameSaga);
+
     const game = yield select(getGame)
     if (game.crashed)
       break
-    yield delay(1000)
   }
 }
 
@@ -27,13 +30,13 @@ function *tickSaga() {
 function *watchTurnSaga() {
   while (true) {
     const action = yield take(TURN)
+    const turnDirection = action.payload.direction
 
-    let board = yield select(getBoard)
+    const board = yield select(getBoard)
+    const currentDirection = board.snake.direction
+    const nextDirection = board.snake.nextDirection
 
-    let turnDirection = action.payload.direction
-    let currentDirection = board.snake.direction
-
-    if (isValidTurn(currentDirection, turnDirection)) {
+    if (nextDirection == null && isValidTurn(currentDirection, turnDirection)) {
       yield put(updateDirection(turnDirection))
     }
   }
@@ -45,11 +48,14 @@ function *updateGameSaga() {
   const rows = board.rows
   const cols = board.cols
   const direction = board.snake.direction
+  const nextDirection = board.snake.nextDirection
   const snake = board.snake
   const foodTile = board.foodTile
 
+  let finalDirection = (nextDirection == null)? direction: nextDirection
+
   // calculate what will the next tile will be, based on the snake direction
-  let nextTile = getNextTile(rows, cols, snake.headTile, direction)
+  let nextTile = getNextTile(rows, cols, snake.headTile, finalDirection)
 
   // snake crashes into the wall or with itself
   if (nextTile < 0 || nextTile in snake.body) {
