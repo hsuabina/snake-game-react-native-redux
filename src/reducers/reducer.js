@@ -1,6 +1,5 @@
-import { TURN, MOVE, GROW, CRASH, UPDATE_DIRECTION } from '../actions/actions.js'
-
-import { getUpdatedSnake } from '../utils/TileUtils'
+import { Actions } from 'src/actions/actions.js'
+import { getUpdatedSnake } from 'src/utils/Utils'
 
 const initialState = {
   game: {
@@ -30,24 +29,24 @@ function reducer(state = initialState, action) {
   let newState = { ...state }
 
   switch (action.type) {
-    case TURN:
+    case Actions.TURN:
       console.log('Turn command received')
       break
-    case UPDATE_DIRECTION:
+    case Actions.UPDATE_DIRECTION:
       console.log('Updating snake nextDirection (' + action.payload.direction + ')')
       newState.board.snake.nextDirection = action.payload.direction
       break
-    case MOVE:
+    case Actions.MOVE:
       console.log('Snake moves to an empty tile')
       newState.board.snake = getUpdatedSnake(state.board.snake, action.payload.nextTile, false)
       break
-    case GROW:
+    case Actions.GROW:
       console.log('Snake eats food and grows')
       newState.board.snake = getUpdatedSnake(state.board.snake, action.payload.nextTile, true)
       newState.board.foodTile = action.payload.newFoodTile
       newState.game.score = newState.game.score + 1
       break
-    case CRASH:
+    case Actions.CRASH:
       console.log('Snake crashes into the wall or its body')
       newState.game.crashed = true
       newState.game.paused = true

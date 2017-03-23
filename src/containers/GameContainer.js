@@ -1,6 +1,7 @@
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import GameView from '../components/GameView.js'
+
+import GameView from 'src/components/GameView.js'
 
 function mapStateToProps(state) {
   return {

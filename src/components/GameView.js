@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
 import { StyleSheet, View, Text } from 'react-native'
 
-import Board from './Board.js'
-import Controls from '../containers/Controls.js'
-import Scores from './Scores.js'
+import Board from 'src/components/Board.js'
+import Scores from 'src/components/Scores.js'
+import ControlsContainer from 'src/containers/ControlsContainer.js'
 
 class GameView extends Component {
   render() {
@@ -27,7 +27,7 @@ class GameView extends Component {
           </View>
 
           <View style={ styles.controls }>
-            <Controls />
+            <ControlsContainer />
           </View>
         </View>
       )

@@ -1,9 +1,8 @@
 import { createStore, applyMiddleware } from 'redux'
 import createSagaMiddleware from 'redux-saga'
 
-import { rootSaga } from './sagas/GameSaga.js'
-
-import reducer from './reducers/reducer.js'
+import { rootSaga } from 'src/sagas/GameSaga.js'
+import reducer from 'src/reducers/reducer.js'
 
 
 let sagaMiddleware = createSagaMiddleware()

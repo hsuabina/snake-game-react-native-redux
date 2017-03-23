@@ -2,10 +2,8 @@ import { delay } from 'redux-saga'
 import { take, select, call, put } from 'redux-saga/effects'
 import Ticker  from 'redux-saga-ticker';
 
-import { TURN, MOVE, GROW, CRASH, UPDATE, move, grow, crash, updateDirection } from '../actions/actions.js'
-
-
-import { getNextTile, isValidTurn } from '../utils/TileUtils.js'
+import { Actions, ActionCreators } from 'src/actions/actions.js'
+import { getNextTile, isValidTurn } from 'src/utils/Utils.js'
 
 function *rootSaga() {
   yield [
@@ -29,7 +27,7 @@ function *tickSaga() {
 // updates snake direction everytime user interacts with keyboard (TURN action)
 function *watchTurnSaga() {
   while (true) {
-    const action = yield take(TURN)
+    const action = yield take(Actions.TURN)
     const turnDirection = action.payload.direction
 
     const board = yield select(getBoard)
@@ -37,7 +35,7 @@ function *watchTurnSaga() {
     const nextDirection = board.snake.nextDirection
 
     if (nextDirection == null && isValidTurn(currentDirection, turnDirection)) {
-      yield put(updateDirection(turnDirection))
+      yield put(ActionCreators.updateDirection(turnDirection))
     }
   }
 }
@@ -59,15 +57,15 @@ function *updateGameSaga() {
 
   // snake crashes into the wall or with itself
   if (nextTile < 0 || nextTile in snake.body) {
-    yield put(crash())
+    yield put(ActionCreators.crash())
   } else if (nextTile == foodTile) {
     // find a new empty tile for the food
     let newFoodTile = yield call(getNewFoodTile, [rows, cols, snake, foodTile])
     // dispatch a grow action
-    yield put(grow(nextTile, newFoodTile))
+    yield put(ActionCreators.grow(nextTile, newFoodTile))
   } else {
     // dispatch a move action
-    yield put(move(nextTile))
+    yield put(ActionCreators.move(nextTile))
   }
 }
 

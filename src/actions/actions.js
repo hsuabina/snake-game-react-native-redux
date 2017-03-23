@@ -1,38 +1,44 @@
-/*
-TODO: Refactor actions so you can refer to actions or action creators separately,
-  like: Actions.MOVE or ActionCreators.moveUp()
-*/
-
+/* Actions */
 const TURN = 'TURN'
 const MOVE = 'MOVE'
 const GROW = 'GROW'
 const CRASH = 'CRASH'
 const UPDATE_DIRECTION = 'UPDATE_DIRECTION'
 
-export { TURN, MOVE, GROW, CRASH, UPDATE_DIRECTION }
-
-
-// TURN action creators
-export function turn(direction) {
- return { type: TURN, payload: { direction: direction } }
+export const Actions = {
+  MOVE: MOVE,
+  TURN: TURN,
+  GROW: GROW,
+  CRASH: CRASH,
+  UPDATE_DIRECTION: UPDATE_DIRECTION
 }
 
-// MOVE action creators
-export function move(nextTile) {
-  return { type: MOVE, payload: { nextTile: nextTile } }
-}
+/* Action creators */
+export const ActionCreators = {
 
-// GROW action creators
-export function grow(nextTile, newFoodTile) {
-  return { type: GROW, payload: { nextTile: nextTile, newFoodTile: newFoodTile } }
-}
+  // TURN action creators
+  turn: (direction) => {
+   return { type: TURN, payload: { direction: direction } }
+  },
 
-// CRASH action creator
-export function crash() {
-  return { type: CRASH, payload: null }
-}
+  // MOVE action creators
+  move: (nextTile) => {
+    return { type: MOVE, payload: { nextTile: nextTile } }
+  },
 
-// UPDATE_DIRECTION action creator
-export function updateDirection(direction) {
-  return { type: UPDATE_DIRECTION, payload: { direction: direction } }
+  // GROW action creators
+  grow: (nextTile, newFoodTile) => {
+    return { type: GROW, payload: { nextTile: nextTile, newFoodTile: newFoodTile } }
+  },
+
+  // CRASH action creator
+  crash: () => {
+    return { type: CRASH, payload: null }
+  },
+
+  // UPDATE_DIRECTION action creator
+  updateDirection: (direction) => {
+    return { type: UPDATE_DIRECTION, payload: { direction: direction } }
+  }
+
 }
