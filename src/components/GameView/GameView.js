@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 import { StyleSheet, View, Text } from 'react-native'
 
-import Board from 'src/components/Board.js'
-import Scores from 'src/components/Scores.js'
+import Board from 'src/components/Board/Board.js'
+import Scores from 'src/components/Scores/Scores.js'
 import ControlsContainer from 'src/containers/ControlsContainer.js'
 
 class GameView extends Component {

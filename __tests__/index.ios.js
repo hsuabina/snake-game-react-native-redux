@@ -1,12 +1,27 @@
-import 'react-native';
-import React from 'react';
-import Index from '../index.ios.js';
+import 'react-native'
+import React from 'react'
 
-// Note: test renderer must be required after react-native.
-import renderer from 'react-test-renderer';
+import { EmptyTile } from 'src/components/BoardTiles/BoardTiles.js'
+import Scores from 'src/components/Scores/Scores.js'
 
-it('renders correctly', () => {
-  const tree = renderer.create(
-    <Index />
-  );
-});
+
+describe('<EmptyTile /> from BoardTiles', () => {
+  it('matches snapshot', () => {
+    const tree = shallow(<EmptyTile />)
+    expect(tree).toMatchSnapshot()
+  })
+})
+
+describe('<SnakeTile /> from SnakeTile', () => {
+  it('matches snapshot', () => {
+    const tree = shallow(<EmptyTile />)
+    expect(tree).toMatchSnapshot()
+  })
+})
+
+describe('<Scores />', () => {
+  it('matches snapshot', () => {
+    const tree = shallow(<Scores score={1}/>)
+    expect(tree).toMatchSnapshot()
+  })
+})

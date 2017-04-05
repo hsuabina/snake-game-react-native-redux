@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { StyleSheet, View } from 'react-native'
 
-import { EmptyTile, SnakeTile, FoodTile } from 'src/components/BoardTiles.js'
+import { EmptyTile, SnakeTile, FoodTile } from 'src/components/BoardTiles/BoardTiles.js'
 
 class Board extends Component {
   render() {

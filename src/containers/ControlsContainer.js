@@ -2,7 +2,7 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 
 import { ActionCreators } from 'src/actions/actions.js'
-import ControlsView from 'src/components/ControlsView.js'
+import ControlsView from 'src/components/ControlsView/ControlsView.js'
 
 function mapDispatchToProps(dispatch) {
   return {

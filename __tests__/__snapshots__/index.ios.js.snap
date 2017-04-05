@@ -1,0 +1,50 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<EmptyTile /> from BoardTiles matches snapshot 1`] = `
+<Svg
+  height="16"
+  preserveAspectRatio="xMidYMid meet"
+  width="16"
+>
+  <Rect
+    fill="#A1C653"
+    height="16"
+    rx={0}
+    ry={0}
+    width="16"
+    x="0"
+    y="0"
+  />
+</Svg>
+`;
+
+exports[`<Scores /> matches snapshot 1`] = `
+<View>
+  <Text
+    accessible={true}
+    allowFontScaling={true}
+    ellipsizeMode="tail"
+  >
+    SCORE: 
+    1
+  </Text>
+</View>
+`;
+
+exports[`<SnakeTile /> from SnakeTile matches snapshot 1`] = `
+<Svg
+  height="16"
+  preserveAspectRatio="xMidYMid meet"
+  width="16"
+>
+  <Rect
+    fill="#A1C653"
+    height="16"
+    rx={0}
+    ry={0}
+    width="16"
+    x="0"
+    y="0"
+  />
+</Svg>
+`;
