@@ -1,7 +1,14 @@
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 
+import { ActionCreators } from 'src/actions/actions.js'
 import GameView from 'src/components/GameView/GameView.js'
+
+function mapDispatchToProps(dispatch) {
+  return {
+    onPlayClick: () => dispatch(ActionCreators.play())
+  }
+}
 
 function mapStateToProps(state) {
   return {
@@ -10,4 +17,4 @@ function mapStateToProps(state) {
   }
 }
 
-export default connect(mapStateToProps)(GameView)
+export default connect(mapStateToProps, mapDispatchToProps)(GameView)

@@ -4,34 +4,35 @@ import { StyleSheet, View, Text } from 'react-native'
 import Board from 'src/components/Board/Board.js'
 import Scores from 'src/components/Scores/Scores.js'
 import ControlsContainer from 'src/containers/ControlsContainer.js'
+import IddleScreenView from 'src/components/IddleScreenView/IddleScreenView.js'
 
 class GameView extends Component {
   render() {
 
-    if (this.props.game.crashed) {
-      console.log('GAME OVER')
+    if (this.props.game.paused || this.props.game.crashed) {
       return (
-        <View style={ styles.gameview }>
-          <Text>GAME OVER!</Text>
-        </View>
-      )
-    } else {
-      return (
-        <View style={ styles.gameview }>
-          <View style= {styles.scores }>
-            <Scores score={ this.props.game.score } />
-          </View>
-
-          <View style={ styles.board }>
-            <Board board={ this.props.board } />
-          </View>
-
-          <View style={ styles.controls }>
-            <ControlsContainer />
-          </View>
-        </View>
+        <IddleScreenView
+          onPlayClick={ this.props.onPlayClick }
+          { ...this.props.game }
+          />
       )
     }
+
+    return (
+      <View style={ styles.gameview }>
+        <View style={ styles.scores }>
+          <Scores score={ this.props.game.score } />
+        </View>
+
+        <View style={ styles.board }>
+          <Board board={ this.props.board } />
+        </View>
+
+        <View style={ styles.controls }>
+          <ControlsContainer />
+        </View>
+      </View>
+    )
   }
 }
 

@@ -1,44 +1,56 @@
 /* Actions */
-const TURN = 'TURN'
-const MOVE = 'MOVE'
-const GROW = 'GROW'
-const CRASH = 'CRASH'
-const UPDATE_DIRECTION = 'UPDATE_DIRECTION'
-
 export const Actions = {
-  MOVE: MOVE,
-  TURN: TURN,
-  GROW: GROW,
-  CRASH: CRASH,
-  UPDATE_DIRECTION: UPDATE_DIRECTION
+  UPDATE_DIRECTION: 'UPDATE_DIRECTION',
+  TURN: 'TURN',
+  MOVE: 'MOVE',
+  GROW: 'GROW',
+  CRASH: 'CRASH',
+  PLAY: 'PLAY',
+  PAUSE: 'PAUSE',
+  RESET_GAME: 'RESET_GAME'
 }
 
 /* Action creators */
 export const ActionCreators = {
 
-  // TURN action creators
+  // UPDATE_DIRECTION action creator
+  updateDirection: (direction) => {
+    return { type: Actions.UPDATE_DIRECTION, payload: { direction: direction } }
+  },
+
+  // TURN action creator
   turn: (direction) => {
-   return { type: TURN, payload: { direction: direction } }
+   return { type: Actions.TURN, payload: { direction: direction } }
   },
 
   // MOVE action creators
   move: (nextTile) => {
-    return { type: MOVE, payload: { nextTile: nextTile } }
+    return { type: Actions.MOVE, payload: { nextTile: nextTile } }
   },
 
-  // GROW action creators
+  // GROW action creator
   grow: (nextTile, newFoodTile) => {
-    return { type: GROW, payload: { nextTile: nextTile, newFoodTile: newFoodTile } }
+    return { type: Actions.GROW, payload: { nextTile: nextTile, newFoodTile: newFoodTile } }
   },
 
   // CRASH action creator
   crash: () => {
-    return { type: CRASH, payload: null }
+    return { type: Actions.CRASH, payload: null }
   },
 
-  // UPDATE_DIRECTION action creator
-  updateDirection: (direction) => {
-    return { type: UPDATE_DIRECTION, payload: { direction: direction } }
+  // PLAY action creator
+  play: () => {
+    return { type: Actions.PLAY, payload: null }
+  },
+
+  // PAUSE action creator
+  pause: () => {
+    return { type: Actions.PAUSE, payload:null }
+  },
+
+  // RESET_GAME action creator
+  resetGame: () => {
+    return { type: Actions.RESET_GAME, payload: null }
   }
 
 }

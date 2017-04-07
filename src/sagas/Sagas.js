@@ -1,26 +1,53 @@
 import { delay } from 'redux-saga'
-import { take, select, call, put } from 'redux-saga/effects'
-import Ticker  from 'redux-saga-ticker';
+import { take, select, call, fork, put, race, cancel } from 'redux-saga/effects'
 
 import { Actions, ActionCreators } from 'src/actions/actions.js'
 import { getNextTile, isValidTurn } from 'src/utils/Utils.js'
 
 function *rootSaga() {
-  yield [
-      tickSaga(),
-      watchTurnSaga()
-    ]
+
+  // Wait for the play event to start the game for the first time
+  yield take(Actions.PLAY)
+
+  while (true) {
+    // Start the gameSaga
+    const currentGame = yield call(gameSaga)
+
+    // Wait for the player to start the game again
+    yield take(Actions.PLAY)
+
+    // Reset the game before the loop
+    yield put(ActionCreators.resetGame())
+  }
+
 }
 
-function *tickSaga() {
-  const channel = Ticker(500);
-  while (true) {
-    yield take(channel);
-    yield call(updateGameSaga);
+function *gameSaga() {
+  // start tickSaga and watchTurnSaga concurrently (they are endless loops)
+  // only the CRASH action will finish the race
+  yield race({
+    tick: call(tickSaga),
+    turn: call(watchTurnSaga),
+    crash: take(Actions.CRASH)
+  })
+}
 
-    const game = yield select(getGame)
-    if (game.crashed)
-      break
+
+function *tickSaga() {
+
+  while (true) {
+    // Wait for whatever comes first (game tick, pause event or crash event)
+    const { tick, pause } = yield race({
+      tick: call(delay, 200),
+      pause: take(Actions.PAUSE)
+    })
+
+    // If no crash or pause until next game tick, update game as normal
+    if (tick) {
+      yield call(updateGameSaga)
+    } else {
+      yield take(Actions.PLAY)
+    }
   }
 }
 

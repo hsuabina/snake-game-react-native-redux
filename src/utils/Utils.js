@@ -33,7 +33,7 @@ function getUpdatedSnake(oldSnake, nextTile, grow) {
     headTile: newHeadTile,
     tailTile: newTailTile,
     body: newBody,
-    direction: oldSnake.nextdirection == null? oldSnake.direction: oldSnake.nextDirection,
+    direction: oldSnake.nextDirection == null? oldSnake.direction: oldSnake.nextDirection,
     nextDirection: null
   }
 
