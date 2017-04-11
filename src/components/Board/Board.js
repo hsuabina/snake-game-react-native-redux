@@ -12,7 +12,11 @@ class Board extends Component {
     let boardSize = rows * cols
 
     // start with the board empty
-    let tiles = [...Array(boardSize).keys()].map((k) => <EmptyTile key={k}/>)
+    // let tiles = [...Array(boardSize).keys()].map((k) => <EmptyTile key={k}/>)
+    let tiles = []
+    for (i = 0; i < (boardSize); i++) {
+      tiles[i] = (<EmptyTile key={i}/>)
+    }
     // add the the snake tail
     tiles[board.snake.tailTile] = ( <SnakeTile key={board.snake.tailTile}/> )
     // add the snake head
